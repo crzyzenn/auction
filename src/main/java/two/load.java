@@ -11,5 +11,7 @@ public class load {
 		while(rs.next()){
 			System.out.println("Username = " + rs.getString(2) + ", Password = " + rs.getString(3));
 		}
+		
+		con.closeConnection();
 	}
 }	

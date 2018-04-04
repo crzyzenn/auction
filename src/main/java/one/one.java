@@ -18,8 +18,8 @@ public class one {
 	}
 	
 	
-	public String get() {
-		return "Hello world"; 
+	public void closeConnection() throws SQLException {
+		conn.close();
 	}
 
 }
