@@ -1,7 +1,7 @@
-<%@ page import="java.sql.*, one.one"%>
+<%@ page import="java.sql.*,one.connect"%>
 
 <%
-one con = new one();
+	one.connect con = new one.connect();
 Statement stm = con.getStatement(); 
 ResultSet rs = stm.executeQuery("SELECT * FROM users");
 while(rs.next()){
@@ -9,7 +9,6 @@ while(rs.next()){
 }
 
 con.closeConnection() ;
-
 %>
 
 

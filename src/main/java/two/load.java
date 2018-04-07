@@ -1,11 +1,11 @@
 package two;
-import one.one;
+import one.connect;
 
 import java.sql.*;
 
 public class load {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
-		one con = new one();
+		connect con = new connect();
 		Statement stm = con.getStatement(); 
 		ResultSet rs = stm.executeQuery("SELECT * FROM users");
 		while(rs.next()){

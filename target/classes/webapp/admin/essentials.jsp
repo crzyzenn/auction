@@ -1,3 +1,5 @@
+<%@ page import = "java.io.File, java.nio.file.Paths" %>
+
 <%
 	String url = request.getRequestURI();
 %>
@@ -23,7 +25,8 @@
 </head>
 <header>
 	<div id = 'bar'>
-		<img src="../Images/home.png" style = 'width:10%;'>						
+		
+		<img src="C:\upload\logo.jpg" style = 'width:10%;'>						
 		
 
 		<div id = 'logStatus'>
@@ -36,10 +39,13 @@
 </header>
 <body>		
 	
-
+	
+			
+			
 	
 
-	<div id = 'left-container'>		
+	<div id = 'left-container'>
+			
 		<ul class="myNav">
 			<% 
 				if(url.equals("/auction/admin/dashboard.jsp")){
@@ -55,3 +61,7 @@
 			
 		</ul>				
 	</div>
+	<%
+				//String filePath = getServletContext().getRealPath("/") + "admin\\Images\\logo.jpg";
+	
+							%>

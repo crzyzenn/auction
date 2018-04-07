@@ -1,12 +1,11 @@
 <%@page import="sun.invoke.empty.Empty"%>
-<%@ page import = "java.sql.*, one.one" %>
+<%@ page import = "java.sql.*,one.connect" %>
 
 <%
-	
 	String username = request.getParameter("username");
 	String password = request.getParameter("password");	
 
-	one con = new one(); 
+	one.connect con = new one.connect(); 
 	Statement stm = con.getStatement();
 	
 	
@@ -16,13 +15,13 @@
 		
 		// If no user is found
 		if(rs.next()){
-			out.println("Username = " + rs.getString(2) + ", Password = " + rs.getString(3));	
-			
-			// Set session for the admin
-			session.setAttribute("user", username); 
+	out.println("Username = " + rs.getString(2) + ", Password = " + rs.getString(3));	
+	
+	// Set session for the admin
+	session.setAttribute("user", username); 
 		}
 		else{
-			out.print("No"); 
+	out.print("No"); 
 		}
 		con.closeConnection(); 
 	}
@@ -30,7 +29,5 @@
 		System.out.println(e.getMessage()); 
 		con.closeConnection(); 
 	}
-		
-	
 %>
 

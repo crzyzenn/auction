@@ -3,9 +3,9 @@ package one;
 import com.matisse.*;
 import java.sql.*;
 
-public class one {
+public class connect {
 	private Connection conn; 
-	public one() throws MtException, ClassNotFoundException, SQLException
+	public connect() throws MtException, ClassNotFoundException, SQLException
 	{
 		Class.forName("com.matisse.sql.MtDriver");
 		conn = DriverManager.getConnection("jdbc:mt://localhost/xxx");

@@ -1,13 +1,17 @@
 <%@page import="org.apache.catalina.tribes.group.interceptors.TwoPhaseCommitInterceptor.MapEntry"%>
 <%@page import="org.apache.tomcat.jni.Directory"%>
 <%@page import="com.matisse.MtDatabase"%>
-<%@ page import = "java.lang.String,java.io.File,java.sql.*, javax.servlet.*,one.one, org.apache.tomcat.util.http.fileupload.servlet.*, java.util.*, org.apache.tomcat.util.http.fileupload.*, org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory" %>
+<%@ page import = "java.lang.String,java.io.File,java.sql.*, javax.servlet.*,one.connect,one.Functions,org.apache.tomcat.util.http.fileupload.servlet.*,java.util.*,org.apache.tomcat.util.http.fileupload.*,org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory" %>
 
 <%
 // Create a new database class
-one con = new one(); 
+connect con = new one.connect(); 
 Statement stm = con.getStatement();
 
+
+// Get working directory
+String filePath = "C:\\Users\\Cryzenn\\wspace\\auction\\src\\main\\webapp\\Images"; 
+//out.println(filePath);
 Map<String, String> formValues = new HashMap<String, String>();
 File file; 
 String imageFile = ""; 
@@ -39,40 +43,46 @@ if (isMultipart)
 	            
 	            boolean isInMemory = item.isInMemory();
 	            long sizeInBytes = item.getSize();
-	         	String filePath = getServletContext().getRealPath("/") + "admin\\Images";
+	         	//String filePath = getServletContext().getRealPath("/") + "admin\\Images";
 	         	//out.println(filePath);
 	         	
 	         	
 	         	// Name of the image file
 	         	imageFile = fileName.substring(fileName.lastIndexOf("\\")+1);
-	       	
+	       		
 	         	
 	         	
 	         	
 	         	// Write the file
 	            if( fileName.lastIndexOf("\\") >= 0 ) {
 	               file = new File( filePath + 
-	               fileName.substring( fileName.lastIndexOf("\\"))) ;
+	               fileName.substring( fileName.lastIndexOf("\\")));
+	               out.println(filePath + fileName.substring( fileName.lastIndexOf("\\")));
 	            } else {
-	               file = new File( filePath + 
+	               file = new File( filePath + "\\" +
 	               fileName.substring(fileName.lastIndexOf("\\")+1)) ;
+	               out.println(filePath + "\\" +fileName.substring( fileName.lastIndexOf("\\")+1));
 	            }
-	         	
+	         	out.println(filePath);
 	         	// Upload the file
 	            item.write( file ) ;
-	            
-                 
             }
         }
-      
-       String query = "INSERT INTO auction_items VALUES ('"+formValues.get("name")+"', '"+formValues.get("date")+"', '"+formValues.get("category")+"', '"+formValues.get("medium")+"', '"+formValues.get("frame")+"', '"+formValues.get("dimensions")+"', '"+formValues.get("description")+"', '"+formValues.get("price")+"', '"+imageFile+"', '"+formValues.get("weight")+"')"; 
-       stm.executeQuery(query);
        
-       con.closeConnection();  
         
+	   // Get item lot number
+	   Functions ln = new Functions(); 
+	   int item_lot_number = ln.generateKey(); 
+       String query = "INSERT INTO auction_items VALUES (" +item_lot_number+ ",'"+formValues.get("name")+"', '"+formValues.get("date")+"', '"+formValues.get("category")+"', '"+formValues.get("medium")+"', '"+formValues.get("frame")+"', '"+formValues.get("dimensions")+"', '"+formValues.get("description")+"', '"+formValues.get("price")+"', '"+imageFile+"', '"+formValues.get("weight")+"')"; 
+       stm.executeQuery(query);
+       //out.println(query);
+       con.closeConnection();  
+       response.sendRedirect("addItem.jsp?added");
     }
     catch(Exception e){
     	con.closeConnection();  
+    	out.println(e.getMessage());
+    	response.sendRedirect("addItem.jsp?added");
     }
-} 
+}
 %>
